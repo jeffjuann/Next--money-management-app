@@ -14,4 +14,4 @@ Users can :
 - Prisma
 - PostgreSQL
 - Axios
-- Redix UI
+- Radix UI
