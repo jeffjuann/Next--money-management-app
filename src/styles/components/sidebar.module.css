@@ -1,0 +1,63 @@
+.appContainer
+{
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+	width: 100vw;
+}
+
+.sidebarContainer
+{
+    height: 100vh;
+    width: 280px;
+    background-color: #4b7bec;
+    padding: 64px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 104px;
+}
+
+.sidebarContainer *
+{
+    color: #ffffff;
+}
+
+.navigationContainer
+{
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.navigator
+{
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.navigator *
+{
+    color: #D8D8D8;
+}
+
+.navigator h3
+{
+    text-decoration: none;
+}
+
+.navigator:hover
+{
+    color: #ffffff;
+}
+
+.active *
+{
+    color: #ffffff;
+}

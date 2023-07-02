@@ -27,6 +27,11 @@ export default function navBar()
     setTabValue("register");
   }
 
+  const handleLogoutButton = () =>
+  {
+    setAuth('unauthenticated');
+  }
+
   return (
     <>
     <nav className={`${styles.nav}`}>
