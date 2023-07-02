@@ -11,7 +11,6 @@ import { DashboardIcon, ReaderIcon, GearIcon } from '@radix-ui/react-icons'
 export default function AppContainer({ children, name }:{ children: any, name: string})
 {
     const currentPath = usePathname();
-    console.log(currentPath);
 
 	return (
         <div className={styles.appContainer}>

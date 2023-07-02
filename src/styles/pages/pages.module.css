@@ -32,6 +32,11 @@
   background-color: #CCEBD7;
 }
 
+.ableSaveBtn
+{
+  cursor: not-allowed;
+}
+
 .logoutButton
 {
   padding: 12px 16px;

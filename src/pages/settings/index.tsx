@@ -1,4 +1,6 @@
 
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { getSession, signOut, useSession } from 'next-auth/react';
 import Axios from 'axios';
 
@@ -9,8 +11,6 @@ import SidebarLayout from '@/components/sidebar';
 // STYLES
 import styles from '@/styles/pages/pages.module.css';
 import field from '@/styles/components/fieldset.module.css';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context: any)
 {
@@ -22,7 +22,7 @@ export async function getServerSideProps(context: any)
       props: {},
       redirect: {
         permanent: false,
-        destination: "/login",
+        destination: "/",
       },
     }
   }
@@ -61,26 +61,34 @@ export default ({ data }:{ data: any}) =>
 {
   const { update } = useSession();
   const { push } = useRouter();
+  const [ ableSaveBtn, setAbleSaveBtn] = useState(false);
 
   const handleLogoutButton = () =>
   {
-    signOut();
+    signOut({
+      redirect: false,
+    });
+    push('/');
   }
 
   const [ userData, setUserData ] = useState(data.user);
 
-  const handleSaveButton = async (e) =>
+  const handleSaveButton = async () =>
   {
-    await Axios.patch('http://localhost:3000/api/user/'+data.user.id,
-		{
-      name: userData.name,
-      email: userData.email,
-      password: userData.password,
-		}).then(() =>
+    if(ableSaveBtn === true)
     {
-      update({ name: userData.name, email: userData.email });
-      push('/settings');
-    })
+      console.log('triggered');
+      await Axios.patch('http://localhost:3000/api/user/'+data.user.id,
+      {
+        name: userData.name,
+        email: userData.email,
+        password: userData.password,
+      }).then(() =>
+      {
+        update({ name: userData.name, email: userData.email });
+        push('/settings');
+      })
+    }
   }
 
 
@@ -99,22 +107,22 @@ export default ({ data }:{ data: any}) =>
               <fieldset className={`${field.fieldset}`}>
                 <label className={`${field.label}`} htmlFor="name">Name</label>
                 <input type='text' className={`${field.input}`} id="name" value={userData.name}
-                  onChange={(e) => {setUserData({...userData, name: e.target.value})}}/>
+                  onChange={(e) => {setUserData({...userData, name: e.target.value}); setAbleSaveBtn(true)}}/>
               </fieldset>
               
               <fieldset className={`${field.fieldset}`}>
                 <label className={`${field.label}`} htmlFor="email">Email</label>
                 <input type='text' className={`${field.input}`} id="email" value={userData.email}
-                  onChange={(e) => {setUserData({...userData, email: e.target.value})}}/>
+                  onChange={(e) => {setUserData({...userData, email: e.target.value}); setAbleSaveBtn(true)}}/>
               </fieldset>
               
               <fieldset className={`${field.fieldset}`}>
                 <label className={`${field.label}`} htmlFor="email">Password</label>
                 <input type='text' className={`${field.input}`} id="email" value={userData.password}
-                  onChange={(e) => {setUserData({...userData, password: e.target.value})}}/>
+                  onChange={(e) => {setUserData({...userData, password: e.target.value}); setAbleSaveBtn(true)}}/>
               </fieldset>
 
-              <button className={`${styles.saveButton}`} onClick={handleSaveButton}>Save Changes</button>
+              <button className={`${styles.saveButton} ${!ableSaveBtn && styles.ableSaveBtn}`} onClick={handleSaveButton}>Save Changes</button>
             </div>
             <hr className={`${styles.lineDivider}`} />
             <button className={`${styles.logoutButton}`} onClick={handleLogoutButton}>Log Out</button>

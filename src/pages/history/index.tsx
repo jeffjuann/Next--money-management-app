@@ -6,6 +6,9 @@ import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import SidebarLayout from '@/components/sidebar';
 
+// STYLES
+import styles from '@/styles/pages/pages.module.css';
+
 export async function getServerSideProps(context: any)
 {
   const session = await getSession(context);
@@ -38,7 +41,9 @@ export default ({ name }:{ name: string}) =>
 			</Head>
 			<main>
 				<SidebarLayout name={name}>
-					<h1>History</h1>
+					<div className={`${styles.pagesContainer}`}>
+            <h1>History</h1>
+          </div>
 				</SidebarLayout>
 			</main>
 		</>
