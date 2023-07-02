@@ -1,0 +1,29 @@
+.fieldset {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0px;
+}
+
+.label {
+  font-size: 15px;
+  width: 90px;
+  color: #000000;
+}
+
+.input {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 15px;
+  color: #000000;
+  height: 35px;
+  border: solid 1px #000000;
+}
+.input:focus {
+  box-shadow: 0 0 0 2px var(--violet-8);
+}

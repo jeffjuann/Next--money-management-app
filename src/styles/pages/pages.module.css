@@ -1,0 +1,47 @@
+.pagesContainer
+{
+    display: flex;
+    flex-direction: column;
+    padding: 48px;
+    gap: 32px;
+}
+
+.lineDivider
+{
+  width:100%;
+  border: solid 1px #000;
+}
+
+.profileSection
+{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.saveButton
+{
+  padding: 12px 16px;
+  border-radius: 6px;
+  background-color: #DDF3E4;
+  color: #18794E;
+}
+
+.saveButton:hover
+{
+  background-color: #CCEBD7;
+}
+
+.logoutButton
+{
+  padding: 12px 16px;
+  border-radius: 6px;
+  background-color: #FFE5E5;
+  color: #CD2B31;
+}
+
+.logoutButton:hover
+{
+  background-color: #FDD8D8;
+}
+

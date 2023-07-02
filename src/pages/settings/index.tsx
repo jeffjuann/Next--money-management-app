@@ -1,10 +1,16 @@
 
-import { getSession, signOut } from 'next-auth/react';
-
+import { getSession, signOut, useSession } from 'next-auth/react';
+import Axios from 'axios';
 
 // COMPONENTS
 import Head from 'next/head';
 import SidebarLayout from '@/components/sidebar';
+
+// STYLES
+import styles from '@/styles/pages/pages.module.css';
+import field from '@/styles/components/fieldset.module.css';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context: any)
 {
@@ -16,34 +22,103 @@ export async function getServerSideProps(context: any)
       props: {},
       redirect: {
         permanent: false,
-        destination: "/",
+        destination: "/login",
       },
     }
   }
-  else 
+  const id = session?.user.id;
+  return await Axios.get('http://localhost:3000/api/user/'+id)
+  .then((response) =>
   {
     return {
       props: {
-        name: session?.user.name},
+        data: {
+          error: null,
+          user: {
+            id: id,
+            name: response.data.name,
+            email: response.data.email,
+            password: response.data.password,
+            balance: response.data.balance,
+            createdAt: response.data.createdAt,
+          },
+        }
+      },
     }
-  }
+  }).catch(() =>
+  {
+    return {
+      props: {
+        data: {
+          error: "failed fetching data",
+        }
+      },
+    }
+  })
 }
 
-export default ({ name }:{ name: string}) =>
+export default ({ data }:{ data: any}) =>
 {
+  const { update } = useSession();
+  const { push } = useRouter();
+
   const handleLogoutButton = () =>
   {
     signOut();
   }
+
+  const [ userData, setUserData ] = useState(data.user);
+
+  const handleSaveButton = async (e) =>
+  {
+    await Axios.patch('http://localhost:3000/api/user/'+data.user.id,
+		{
+      name: userData.name,
+      email: userData.email,
+      password: userData.password,
+		}).then(() =>
+    {
+      update({ name: userData.name, email: userData.email });
+      push('/settings');
+    })
+  }
+
+
 	return (
 		<>
 			<Head>
 					<title>Settings</title>
 			</Head>
 			<main>
-				<SidebarLayout name={name}>
-					<h1>Settings</h1>
-          <button onClick={handleLogoutButton}>Log Out</button>
+				<SidebarLayout name={data.user.name}>
+          <div className={`${styles.pagesContainer}`}>
+            <h1>Settings</h1>
+            <hr className={`${styles.lineDivider}`} />
+            <div className={`${styles.profileSection}`}>
+              <h2>Profile</h2>
+              <fieldset className={`${field.fieldset}`}>
+                <label className={`${field.label}`} htmlFor="name">Name</label>
+                <input type='text' className={`${field.input}`} id="name" value={userData.name}
+                  onChange={(e) => {setUserData({...userData, name: e.target.value})}}/>
+              </fieldset>
+              
+              <fieldset className={`${field.fieldset}`}>
+                <label className={`${field.label}`} htmlFor="email">Email</label>
+                <input type='text' className={`${field.input}`} id="email" value={userData.email}
+                  onChange={(e) => {setUserData({...userData, email: e.target.value})}}/>
+              </fieldset>
+              
+              <fieldset className={`${field.fieldset}`}>
+                <label className={`${field.label}`} htmlFor="email">Password</label>
+                <input type='text' className={`${field.input}`} id="email" value={userData.password}
+                  onChange={(e) => {setUserData({...userData, password: e.target.value})}}/>
+              </fieldset>
+
+              <button className={`${styles.saveButton}`} onClick={handleSaveButton}>Save Changes</button>
+            </div>
+            <hr className={`${styles.lineDivider}`} />
+            <button className={`${styles.logoutButton}`} onClick={handleLogoutButton}>Log Out</button>
+          </div>
 				</SidebarLayout>
 			</main>
 		</>

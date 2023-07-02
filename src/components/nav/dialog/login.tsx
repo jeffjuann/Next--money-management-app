@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 // LOGIN COMPONENT
 import form from '@/styles/components/dialogs/form.module.css';
+import field from '@/styles/components/fieldset.module.css';
 
 export async function getServerSideProps(context: any)
 {
@@ -51,14 +52,14 @@ export default () =>
 
 	return (
 		<div className={`${form.container}`}>
-			<fieldset className={`${form.fieldset}`}>
-			<label className={`${form.label}`} htmlFor="email">Email</label>
-			<input type='text' className={`${form.input}`} id="email" placeholder="Email" value={authData.email}
+			<fieldset className={`${field.fieldset}`}>
+			<label className={`${field.label}`} htmlFor="email">Email</label>
+			<input type='text' className={`${field.input}`} id="email" placeholder="Email" value={authData.email}
 				onChange={(e) => setAuthData({...authData, email: e.target.value})}/>
 			</fieldset>
-			<fieldset className={`${form.fieldset}`}>
-			<label className={`${form.label}`} htmlFor="password">Password</label>
-			<input type='password' className={`${form.input}`} id="password" placeholder="********" value={authData.password}
+			<fieldset className={`${field.fieldset}`}>
+			<label className={`${field.label}`} htmlFor="password">Password</label>
+			<input type='password' className={`${field.input}`} id="password" placeholder="********" value={authData.password}
 				onChange={(e) => setAuthData({...authData, password: e.target.value})}/>
 			</fieldset>
       {err && <p style={{color: 'red'}}>Invalid Credentials</p>}

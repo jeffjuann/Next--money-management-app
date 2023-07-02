@@ -37,7 +37,11 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    jwt({ token, account, user }) {
+    jwt({ token, account, user, trigger, session }) {
+      if (trigger === "update" && session?.name) {
+        token.name = session
+        token.email = session
+      }
       if (account) {
         token.accessToken = account.access_token
         token.id = user?.id
@@ -50,7 +54,7 @@ const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/login"
+    signIn: "/"
   },
 };
 

@@ -1,6 +1,7 @@
 
 // REGISTER COMPONENT
 import form from '@/styles/components/dialogs/form.module.css'; // CSS
+import field from '@/styles/components/fieldset.module.css'; // CSS
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -33,19 +34,19 @@ export default () =>
 
 	return (
 		<div className={`${form.container}`}>
-			<fieldset className={`${form.fieldset}`}>
-			<label className={`${form.label}`} htmlFor="name">Name</label>
-			<input type='text' className={`${form.input}`} id="name" placeholder="Name" value={newUser.name}
+			<fieldset className={`${field.fieldset}`}>
+			<label className={`${field.label}`} htmlFor="name">Name</label>
+			<input type='text' className={`${field.input}`} id="name" placeholder="Name" value={newUser.name}
 				onChange={(e) => setNewUser({...newUser, name: e.target.value})}/>
 			</fieldset>
-			<fieldset className={`${form.fieldset}`}>
-			<label className={`${form.label}`} htmlFor="email">Email</label>
-			<input type='text' className={`${form.input}`} id="email" placeholder="Email" value={newUser.email}
+			<fieldset className={`${field.fieldset}`}>
+			<label className={`${field.label}`} htmlFor="email">Email</label>
+			<input type='text' className={`${field.input}`} id="email" placeholder="Email" value={newUser.email}
 				onChange={(e) => setNewUser({...newUser, email: e.target.value})}/>
 			</fieldset>
-			<fieldset className={`${form.fieldset}`}>
-			<label className={`${form.label}`} htmlFor="password">Password</label>
-			<input type='password' className={`${form.input}`} id="password" placeholder="********" value={newUser.password}
+			<fieldset className={`${field.fieldset}`}>
+			<label className={`${field.label}`} htmlFor="password">Password</label>
+			<input type='password' className={`${field.input}`} id="password" placeholder="********" value={newUser.password}
 				onChange={(e) => setNewUser({...newUser, password: e.target.value})}/>
 			</fieldset>
 			<button className={`${form.button}`}onClick={handleSubmit}>Register</button>
