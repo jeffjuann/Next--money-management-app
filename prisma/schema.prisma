@@ -21,6 +21,8 @@ model transaction {
   id          String   @id @default(uuid())
   name        String
   description String
+  amount      Int
+  type        String
   doneBy      user     @relation(fields: [userId], references: [id])
   userId      String
   doneAt      DateTime

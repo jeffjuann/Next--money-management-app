@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, user } from '@prisma/client'
 const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) =>
@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) =>
 	}
 	else if(req.method === 'POST')
 	{
-        const user = {
+        const user: user = {
             ...req.body,
             balance: 0,
         }

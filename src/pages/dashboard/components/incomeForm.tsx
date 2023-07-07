@@ -9,25 +9,10 @@ import field from '@/styles/components/fieldset.module.css';
 
 export default () =>
 {
-	const [ authData, setAuthData ] = useState({
-		email: '',
-		password: ''
-	})
-
-  const { push } = useRouter();
-  const [err, setErr] = useState(false);
-
-	const handleSubmit = async () =>
-	{
-    const res = await signIn("credentials", {
-      username: authData.email,
-      password: authData.password,
-      redirect: false
-    })
-    if(res?.error === 'invalid credentials') setErr(true);
-    else push("./dashboard");
-	}
-
+    const [ transaction, setTransaction ] = useState({
+        name: '',
+        description: ''
+    });
 	return (
 		<div className={`${form.container}`}>
 			<fieldset className={`${field.fieldset}`}>
@@ -40,8 +25,7 @@ export default () =>
 			<input type='password' className={`${field.input}`} id="password" placeholder="********" value={authData.password}
 				onChange={(e) => setAuthData({...authData, password: e.target.value})}/>
 			</fieldset>
-      {err && <p style={{color: 'red'}}>Invalid Credentials</p>}
-			<button className={`${form.button}`}onClick={handleSubmit}>Log In</button>
+			<button className={`${form.button}`}onClick={handleSubmit}>Add expense</button>
 		</div>
 	)
 }
