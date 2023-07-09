@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   else if(req.method === 'POST')
   {
-    const Trans: transaction = {
+    const Trans = {
       name: 'Testing',
       description: 'testing app',
       amount: 15000,
@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       userId: id
     };
     const newTrans = await prisma.transaction.create({ data: Trans });
-    console.log(newTrans)
+    // console.log(newTrans)
     res.status(200).json(newTrans);
   }
 }
